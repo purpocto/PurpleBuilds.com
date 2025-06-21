@@ -1,76 +1,78 @@
-// /src/pages/IntakeStep5.jsx
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { db } from "../services/firestore";
-import { auth } from "../firebase/auth";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { FormContext } from "../services/FormContext";
+import { IntakeContext } from "../context/IntakeContext";
 import { sendConfirmationEmail, sendAdminSummaryEmail } from "../services/email";
+import { saveSubmission } from "../services/firestore";
+import { getAuth } from "firebase/auth";
 
 export default function IntakeStep5() {
+  const { formData } = useContext(IntakeContext);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { formData } = useContext(FormContext);
-  const [submitting, setSubmitting] = useState(false);
-  const [userId, setUserId] = useState(null);
-
-  // Grab userId after auth initializes
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUserId(user?.uid || null);
-    });
-    return () => unsubscribe();
-  }, []);
 
   const handleSubmit = async () => {
-    setSubmitting(true);
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+
+    if (!currentUser || !currentUser.uid) {
+      alert("You must be logged in to submit a project.");
+      return;
+    }
+
+    console.log("🔥 USER UID DEBUG:", currentUser.uid);
+
+    const submissionData = {
+      userId: currentUser.uid,
+      name: formData.name || "",
+      email: formData.email || "",
+      business: formData.business || "",
+      projectType: formData.projectType || "",
+      selectedFeatures: formData.features || [],
+      additionalNotes: formData.notes || "",
+      createdAt: new Date().toISOString()
+    };
+
     try {
-      const submission = {
-        ...formData,
-        userId,
-        createdAt: serverTimestamp(),
-      };
-
-      await addDoc(collection(db, "intakeForms"), submission);
-      await sendConfirmationEmail(formData);
-      await sendAdminSummaryEmail(formData);
-
-      alert("Submission successful!");
-      navigate("/");
-    } catch (err) {
-      console.error("Submission error:", err);
-      alert("There was a problem sending your submission.");
+      setLoading(true);
+     await saveSubmission(submissionData, currentUser.uid);
+      await sendConfirmationEmail(submissionData);
+      await sendAdminSummaryEmail(submissionData);
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("❌ Submission failed:", error);
+      alert("There was an error submitting the form. Please try again.");
     } finally {
-      setSubmitting(false);
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-terminalBg text-crtGreen font-pixel p-6">
-      <div className="max-w-xl mx-auto border border-crtGreen p-6 shadow-glow rounded-md">
-        <h1 className="text-2xl mb-6">✅ Step 5: Review & Submit</h1>
-
-        <div className="space-y-3 text-sm mb-6 font-mono">
-          <p><b>Name:</b> {formData.name}</p>
-          <p><b>Email:</b> {formData.email}</p>
-          <p><b>Business:</b> {formData.business}</p>
-          <p><b>Project Type:</b> {formData.projectType}</p>
-          <p><b>Features:</b> <span className="text-green-400">{formData.features?.join(", ")}</span></p>
-          <p><b>Notes:</b> <span className="text-green-400">{formData.notes}</span></p>
+    <div className="min-h-screen bg-gradient-to-br from-purple-600 to-indigo-800 flex items-center justify-center font-sans px-4">
+      <div className="bg-white rounded-xl shadow-lg overflow-hidden w-full max-w-4xl flex flex-col md:flex-row">
+        <div className="md:w-1/2 bg-purple-700 flex items-center justify-center p-8">
+          <img
+            src="/assets/review.png"
+            alt="Review Illustration"
+            className="w-full max-w-[280px] h-auto"
+          />
         </div>
+        <div className="md:w-1/2 p-8 flex flex-col justify-center">
+          <h2 className="text-xl font-bold text-green-600 mb-4">✅ Review & Submit</h2>
+          <div className="text-sm text-gray-700 space-y-2">
+            <p><strong>Project Type:</strong> {formData.projectType || "N/A"}</p>
+            <p><strong>Name:</strong> {formData.name || "N/A"}</p>
+            <p><strong>Email:</strong> {formData.email || "N/A"}</p>
+            <p><strong>Business:</strong> {formData.business || "N/A"}</p>
+            <p><strong>Features:</strong> {(formData.features || []).join(", ") || "N/A"}</p>
+            <p><strong>Additional Notes:</strong> {formData.notes || "N/A"}</p>
+          </div>
 
-        <div className="flex justify-between">
-          <button
-            onClick={() => navigate("/intake/step-4")}
-            className="px-4 py-2 border border-crtGreen hover:bg-crtGreen hover:text-terminalBg transition-all font-mono rounded shadow-glow"
-          >
-            ⬅ Back
-          </button>
           <button
             onClick={handleSubmit}
-            disabled={submitting || !userId}
-            className="px-4 py-2 border border-crtGreen hover:bg-crtGreen hover:text-terminalBg transition-all font-mono rounded shadow-glow"
+            disabled={loading}
+            className="mt-6 bg-purple-700 hover:bg-purple-800 text-white py-2 px-4 rounded transition disabled:opacity-50"
           >
-            {submitting ? "Submitting..." : "✅ Submit"}
+            {loading ? "Submitting..." : "Submit Project 🚀"}
           </button>
         </div>
       </div>

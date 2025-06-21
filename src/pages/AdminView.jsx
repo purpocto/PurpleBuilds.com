@@ -6,7 +6,8 @@ import {
   updateDoc,
   serverTimestamp,
 } from "firebase/firestore";
-import { db } from "../services/firestore";
+import { db } from "../firebase/firebase";
+
 
 export default function AdminView() {
   const { id } = useParams();

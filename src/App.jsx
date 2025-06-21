@@ -5,7 +5,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 
 import { auth } from "./firebase/auth";
-import { db } from "./services/firestore";
+import { db } from "./firebase/firebase";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";

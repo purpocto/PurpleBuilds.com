@@ -1,11 +1,18 @@
 // /src/pages/Intake.jsx
 import { useNavigate } from "react-router-dom";
+import { useIntake } from "../context/IntakeContext";
 
 export default function Intake() {
   const navigate = useNavigate();
+  const { formData, setFormData } = useIntake();
 
   const handleStart = () => {
+    if (!formData.type) return alert("Please select a project type.");
     navigate("/intake/step-2");
+  };
+
+  const handleSelect = (value) => {
+    setFormData((prev) => ({ ...prev, type: value }));
   };
 
   return (
@@ -26,6 +33,19 @@ export default function Intake() {
           <p className="text-gray-700 mb-6">
             Let’s get started building something great! This form will help us understand your project requirements.
           </p>
+
+          <label className="text-sm font-medium mb-2 text-gray-800">What type of project is this?</label>
+          <select
+            value={formData.type}
+            onChange={(e) => handleSelect(e.target.value)}
+            className="mb-6 p-2 border rounded w-full"
+          >
+            <option value="">-- Select One --</option>
+            <option value="App">App</option>
+            <option value="Website">Website</option>
+            <option value="Software">Software</option>
+          </select>
+
           <button
             onClick={handleStart}
             className="bg-purple-700 hover:bg-purple-800 text-white py-2 px-4 rounded transition"

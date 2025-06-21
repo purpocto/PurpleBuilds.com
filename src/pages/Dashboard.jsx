@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "../services/firestore";
+import { db } from "../firebase/firebase";
 import { auth } from "../firebase/auth";
 
 export default function Dashboard() {

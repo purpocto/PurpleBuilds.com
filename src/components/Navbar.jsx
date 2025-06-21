@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { auth } from "../firebase/auth";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../services/firestore";
+import { db } from "../firebase/firebase";
 
 export default function Navbar() {
   const [user, setUser] = useState(null);

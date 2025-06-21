@@ -2,9 +2,9 @@
 import { useState } from "react";
 import { registerWithEmail } from "../services/auth";
 import { useNavigate } from "react-router-dom";
-import { db } from "../services/firestore";
+import { db } from "../firebase/firebase";
 import { doc, setDoc } from "firebase/firestore";
-import { auth } from "../firebase/auth";
+
 
 export default function Signup() {
   const navigate = useNavigate();

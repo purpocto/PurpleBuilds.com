@@ -1,75 +1,96 @@
+// /src/pages/IntakeStep2.jsx
 import { useNavigate } from "react-router-dom";
-import { useFormContext } from "../services/FormContext.jsx";
+import { useIntake } from "../context/IntakeContext";
 
 export default function IntakeStep2() {
   const navigate = useNavigate();
-  const { formData, updateFormData } = useFormContext();
+  const { formData, setFormData } = useIntake();
 
   const handleChange = (e) => {
-    updateFormData({ [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleNext = () => {
     if (!formData.name || !formData.email) {
-      alert("Name and email are required.");
+      alert("Name and Email are required.");
       return;
     }
     navigate("/intake/step-3");
   };
 
-  return (
-    <div className="min-h-screen bg-terminalBg text-crtGreen font-pixel p-6">
-      <div className="max-w-xl mx-auto border border-crtGreen p-6 shadow-glow rounded-md">
-        <h1 className="text-2xl mb-4">📝 Step 2: Basic Info</h1>
+  const handleBack = () => {
+    navigate("/intake");
+  };
 
-        <div className="space-y-4">
-          <label className="block">
-            Name
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-600 to-indigo-800 flex items-center justify-center px-6 font-sans">
+      <div className="bg-white rounded-xl shadow-lg overflow-hidden w-full max-w-4xl flex flex-col md:flex-row">
+        {/* Left Illustration */}
+        <div className="md:w-1/2 bg-purple-700 flex items-center justify-center p-8">
+          <img
+            src="/assets/type.png"
+            alt="Project Type Illustration"
+            className="w-full max-w-[280px] h-auto"
+          />
+        </div>
+
+        {/* Right Form Fields */}
+        <div className="md:w-1/2 p-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Step 2: Your Info</h2>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
             <input
               type="text"
               name="name"
-              value={formData.name || ""}
+              value={formData.name}
               onChange={handleChange}
-              className="block w-full mt-1 p-2 bg-terminalBg text-crtGreen border border-crtGreen rounded font-mono"
+              className="w-full p-2 border rounded"
+              placeholder="Your name"
+              required
             />
-          </label>
+          </div>
 
-          <label className="block">
-            Email
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
             <input
               type="email"
               name="email"
-              value={formData.email || ""}
+              value={formData.email}
               onChange={handleChange}
-              className="block w-full mt-1 p-2 bg-terminalBg text-crtGreen border border-crtGreen rounded font-mono"
+              className="w-full p-2 border rounded"
+              placeholder="you@example.com"
+              required
             />
-          </label>
+          </div>
 
-          <label className="block">
-            Business Name <span className="text-silver text-xs">(optional)</span>
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-1">Business Name (optional)</label>
             <input
               type="text"
               name="business"
-              value={formData.business || ""}
+              value={formData.business}
               onChange={handleChange}
-              className="block w-full mt-1 p-2 bg-terminalBg text-crtGreen border border-crtGreen rounded font-mono"
+              className="w-full p-2 border rounded"
+              placeholder="e.g. PurpleBuilds LLC"
             />
-          </label>
-        </div>
+          </div>
 
-        <div className="flex justify-between mt-6">
-          <button
-            onClick={() => navigate("/intake")}
-            className="px-4 py-2 border border-crtGreen hover:bg-crtGreen hover:text-terminalBg transition-all font-mono rounded shadow-glow"
-          >
-            ⬅ Back
-          </button>
-          <button
-            onClick={handleNext}
-            className="px-4 py-2 border border-crtGreen hover:bg-crtGreen hover:text-terminalBg transition-all font-mono rounded shadow-glow"
-          >
-            ➡ Next
-          </button>
+          <div className="flex justify-between">
+            <button
+              onClick={handleBack}
+              className="bg-gray-200 hover:bg-gray-300 text-gray-700 py-2 px-4 rounded"
+            >
+              ← Back
+            </button>
+            <button
+              onClick={handleNext}
+              className="bg-purple-700 hover:bg-purple-800 text-white py-2 px-4 rounded"
+            >
+              Next →
+            </button>
+          </div>
         </div>
       </div>
     </div>

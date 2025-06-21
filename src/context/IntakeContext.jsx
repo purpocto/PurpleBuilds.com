@@ -1,22 +1,21 @@
 // /src/context/IntakeContext.jsx
-
 import { createContext, useContext, useState } from "react";
 
-// Create the context object
-const IntakeContext = createContext();
+// Exported context object
+export const IntakeContext = createContext();
 
-// Hook to access context
+// Optional convenience hook
 export const useIntake = () => useContext(IntakeContext);
 
-// Provider component
+// Provider wraps around intake routes
 export const IntakeProvider = ({ children }) => {
   const [formData, setFormData] = useState({
-    type: "",     // from step 1
-    name: "",     // from step 2
+    projectType: "",
+    name: "",
     email: "",
-    business: "", // optional
-    features: [], // step 3
-    notes: "",    // step 4
+    business: "",
+    features: [],
+    notes: "",
   });
 
   return (

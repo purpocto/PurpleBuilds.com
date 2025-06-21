@@ -1,22 +1,33 @@
 // /src/services/email.js
 import emailjs from "@emailjs/browser";
 
-// These must match your EmailJS dashboard
-const SERVICE_ID = "service_wq7jaj8";
-const USER_TEMPLATE_ID = "template_9mn2p1e";
-const ADMIN_TEMPLATE_ID = "template_x0ovcve";
-const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;        // keep private in .env
-
-/**
- * Send confirmation email to user
- */
-export const sendConfirmationEmail = (formData) => {
-  return emailjs.send(SERVICE_ID, USER_TEMPLATE_ID, formData, PUBLIC_KEY);
+export const sendConfirmationEmail = (data) => {
+  return emailjs.send(
+    import.meta.env.VITE_EMAILJS_SERVICE_ID,
+    import.meta.env.VITE_EMAILJS_USER_TEMPLATE_ID,
+    {
+      name: data.name,
+      email: data.email,
+      projectType: data.projectType,
+      features: data.selectedFeatures.join(", "),
+      notes: data.additionalNotes,
+    },
+    import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+  );
 };
 
-/**
- * Send summary email to yourself (site owner)
- */
-export const sendAdminSummaryEmail = (formData) => {
-  return emailjs.send(SERVICE_ID, ADMIN_TEMPLATE_ID, formData, PUBLIC_KEY);
+export const sendAdminSummaryEmail = (data) => {
+  return emailjs.send(
+    import.meta.env.VITE_EMAILJS_SERVICE_ID,
+    import.meta.env.VITE_EMAILJS_ADMIN_TEMPLATE_ID,
+    {
+      name: data.name,
+      email: data.email,
+      projectType: data.projectType,
+      features: data.selectedFeatures.join(", "),
+      business: data.business || "N/A",
+      notes: data.additionalNotes || "None"
+    },
+    import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+  );
 };
