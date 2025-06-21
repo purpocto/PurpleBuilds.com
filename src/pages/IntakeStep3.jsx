@@ -46,7 +46,7 @@ export default function IntakeStep3() {
         {/* Left Illustration */}
         <div className="md:w-1/2 bg-purple-700 flex items-center justify-center p-8">
           <img
-            src="/assets/illustration.png"
+            src="/assets/purplebuildsSIGNUP.jpg"
             alt="Feature Selection Illustration"
             className="w-full max-w-[280px] h-auto"
           />

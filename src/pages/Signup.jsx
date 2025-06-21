@@ -36,7 +36,7 @@ export default function Signup() {
       <div className="bg-white rounded-xl shadow-lg overflow-hidden w-full max-w-5xl flex flex-col md:flex-row">
         <div className="md:w-1/2 bg-purple-700 flex items-center justify-center p-8">
           <img
-            src="/assets/illustration.png"
+            src="/assets/purplebuildsSIGNUP.jpg"
             alt="PurpleBuilds Logo"
             className="w-full max-w-[300px] h-auto"
           />

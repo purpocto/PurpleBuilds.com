@@ -21,7 +21,7 @@ export default function Home() {
         {/* Left Image */}
         <div className="md:w-1/2 bg-purple-700 flex items-center justify-center p-8">
           <img
-            src="/assets/mascot.png"
+            src="/assets/purplebuildsHOME.jpg"
             alt="PurpleBuilds Mascot"
             className="w-full max-w-[280px] h-auto"
           />

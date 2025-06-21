@@ -19,8 +19,6 @@ export default function IntakeStep5() {
       return;
     }
 
-    console.log("🔥 USER UID DEBUG:", currentUser.uid);
-
     const submissionData = {
       userId: currentUser.uid,
       name: formData.name || "",
@@ -51,7 +49,7 @@ export default function IntakeStep5() {
       <div className="bg-white rounded-xl shadow-lg overflow-hidden w-full max-w-4xl flex flex-col md:flex-row">
         <div className="md:w-1/2 bg-purple-700 flex items-center justify-center p-8">
           <img
-            src="/assets/review.png"
+            src="/assets/purplebuildsFIN.jpg"
             alt="Review Illustration"
             className="w-full max-w-[280px] h-auto"
           />

@@ -45,7 +45,7 @@ export default function Login() {
         {/* Logo Panel */}
         <div className="md:w-1/2 bg-purple-700 flex items-center justify-center p-8">
           <img
-            src="/assets/illustration.png"
+            src="/assets/purplebuildsLOGIN.jpg"
             alt="PurpleBuilds Logo"
             className="w-full max-w-[300px] h-auto"
           />

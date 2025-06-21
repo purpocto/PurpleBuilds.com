@@ -21,7 +21,7 @@ export default function Intake() {
         {/* Left Illustration Panel */}
         <div className="md:w-1/2 bg-purple-700 flex items-center justify-center p-8">
           <img
-            src="/assets/illustration.png"
+            src="/assets/purplebuildsINTAKE.jpg"
             alt="Project Intake Illustration"
             className="w-full max-w-[280px] h-auto"
           />

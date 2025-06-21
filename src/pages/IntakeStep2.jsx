@@ -29,7 +29,7 @@ export default function IntakeStep2() {
         {/* Left Illustration */}
         <div className="md:w-1/2 bg-purple-700 flex items-center justify-center p-8">
           <img
-            src="/assets/type.png"
+            src="/assets/purplebuildsQUES.jpg"
             alt="Project Type Illustration"
             className="w-full max-w-[280px] h-auto"
           />

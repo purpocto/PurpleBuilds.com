@@ -27,7 +27,7 @@ export default function IntakeStep4() {
         {/* Left Illustration */}
         <div className="md:w-1/2 bg-purple-700 flex items-center justify-center p-8">
           <img
-            src="/assets/illustration.png"
+            src="/assets/purplebuildsHOME.jpg"
             alt="Additional Notes Illustration"
             className="w-full max-w-[280px] h-auto"
           />
