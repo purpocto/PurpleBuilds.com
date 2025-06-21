@@ -13,7 +13,7 @@ export default function IntakeStep5() {
   const [submitting, setSubmitting] = useState(false);
   const [userId, setUserId] = useState(null);
 
-  // ⏳ Grab userId after auth initializes
+  // Grab userId after auth initializes
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUserId(user?.uid || null);

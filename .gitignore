@@ -2,6 +2,7 @@
 .firebase/
 firebase.json
 .firebaserc
+.firestore.js
 
 # Environment Variables
 .env
