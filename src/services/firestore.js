@@ -1,21 +1,16 @@
 // /src/firebase/firebase.js
-
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
-// Firebase config
 const firebaseConfig = {
-  apiKey: "AIzaSyDfTRLZ7JXV-N1DD0eazj64ByPfjp6HR7w",
-  authDomain: "purplebuilds-56e2e.firebaseapp.com",
-  projectId: "purplebuilds-56e2e",
-  storageBucket: "purplebuilds-56e2e.firebasestorage.app",
-  messagingSenderId: "276161430333",
-  appId: "1:276161430333:web:53a7f1160dc4dd53c77b54",
-  measurementId: "G-WJLZNWBQYE"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase app
 const app = initializeApp(firebaseConfig);
-
-// Initialize Firestore
 export const db = getFirestore(app);
