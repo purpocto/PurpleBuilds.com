@@ -1,30 +1,30 @@
-// src/pages/BuildWithMe.jsx
-
 import { useState } from "react";
 import {
   sendBuildAdminEmail,
   sendBuildConfirmationEmail,
 } from "../services/email";
 
-export default function BuildWithMe() {
-  const [formData, setFormData] = useState({
-    service: "",
-    goal: "",
-    experience: "",
-    trainingDays: "",
-    equipment: "",
-    nutritionGoal: "",
-    biggestStruggle: "",
-    successVision: "",
-    name: "",
-    email: "",
-  });
+const initialFormData = {
+  service: "",
+  goal: "",
+  experience: "",
+  trainingDays: "",
+  equipment: "",
+  nutritionGoal: "",
+  biggestStruggle: "",
+  successVision: "",
+  name: "",
+  email: "",
+};
 
+export default function BuildWithMe() {
+  const [formData, setFormData] = useState(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({
     type: "",
     message: "",
   });
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -45,43 +45,75 @@ export default function BuildWithMe() {
     });
 
     try {
-      // Send the lead summary to you.
       await sendBuildAdminEmail(formData);
-
-      // Send a confirmation email to the user.
       await sendBuildConfirmationEmail(formData);
 
-      // Show success feedback in the UI.
-      setSubmitStatus({
-        type: "success",
-        message:
-          "Your build was submitted successfully. Check your email for confirmation.",
-      });
-
-      // Reset the form after a successful submit.
-      setFormData({
-        service: "",
-        goal: "",
-        experience: "",
-        trainingDays: "",
-        equipment: "",
-        nutritionGoal: "",
-        biggestStruggle: "",
-        successVision: "",
-        name: "",
-        email: "",
-      });
+      setIsSubmitted(true);
+      setFormData(initialFormData);
     } catch (error) {
       console.error("Failed to submit Build With Me form:", error);
 
       setSubmitStatus({
         type: "error",
         message:
-          "Something went wrong while sending your form. Double-check your EmailJS settings and try again.",
+          "Something went wrong while sending your form. Please try again in a minute.",
       });
     } finally {
       setIsSubmitting(false);
     }
+  }
+
+  function handleStartAnotherBuild() {
+    setIsSubmitted(false);
+    setSubmitStatus({
+      type: "",
+      message: "",
+    });
+    setFormData(initialFormData);
+  }
+
+  if (isSubmitted) {
+    return (
+      <main className="min-h-screen bg-zinc-950 text-white">
+        <section className="mx-auto flex min-h-[70vh] max-w-4xl items-center px-6 py-16 sm:px-8 lg:px-12">
+          <div className="w-full rounded-3xl border border-zinc-800 bg-zinc-900 p-8 text-center shadow-2xl shadow-black/20 sm:p-12">
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-fuchsia-300">
+              Build Submitted
+            </p>
+
+            <h1 className="mt-4 text-4xl font-black sm:text-5xl">
+              You’re officially in.
+            </h1>
+
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-zinc-300">
+              Your request has been sent successfully. I’ll personally review your
+              answers and follow up using the email you submitted.
+            </p>
+
+            <div className="mt-8 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm leading-7 text-emerald-200">
+              A confirmation email should already be on its way to your inbox.
+            </div>
+
+            <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
+              <a
+                href="/"
+                className="rounded-2xl bg-fuchsia-500 px-6 py-3 text-base font-bold text-white transition hover:bg-fuchsia-400"
+              >
+                Back to Home
+              </a>
+
+              <button
+                type="button"
+                onClick={handleStartAnotherBuild}
+                className="rounded-2xl border border-zinc-700 bg-zinc-950 px-6 py-3 text-base font-semibold text-zinc-200 transition hover:border-fuchsia-400 hover:text-white"
+              >
+                Submit Another Build
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+    );
   }
 
   return (
@@ -330,13 +362,7 @@ export default function BuildWithMe() {
           </div>
 
           {submitStatus.message && (
-            <div
-              className={`rounded-2xl border p-4 text-sm leading-7 ${
-                submitStatus.type === "success"
-                  ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-200"
-                  : "border-red-500/30 bg-red-500/10 text-red-200"
-              }`}
-            >
+            <div className="rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-sm leading-7 text-red-200">
               {submitStatus.message}
             </div>
           )}
@@ -344,7 +370,7 @@ export default function BuildWithMe() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full rounded-2xl bg-fuchsia-500 px-6 py-4 text-base font-bold text-white shadow-lg shadow-fuchsia-500/20 transition hover:scale-[1.01] hover:bg-fuchsia-400 disabled:cursor-not-allowed disabled:opacity-60"
+            className="w-full rounded-2xl bg-fuchsia-500 px-6 py-4 text-base font-bold text-white transition hover:bg-fuchsia-400 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isSubmitting ? "Submitting..." : "Submit My Build"}
           </button>
