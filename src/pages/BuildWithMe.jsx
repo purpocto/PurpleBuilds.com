@@ -1,0 +1,355 @@
+// src/pages/BuildWithMe.jsx
+
+import { useState } from "react";
+import {
+  sendBuildAdminEmail,
+  sendBuildConfirmationEmail,
+} from "../services/email";
+
+export default function BuildWithMe() {
+  const [formData, setFormData] = useState({
+    service: "",
+    goal: "",
+    experience: "",
+    trainingDays: "",
+    equipment: "",
+    nutritionGoal: "",
+    biggestStruggle: "",
+    successVision: "",
+    name: "",
+    email: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState({
+    type: "",
+    message: "",
+  });
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+
+    setFormData((previousData) => ({
+      ...previousData,
+      [name]: value,
+    }));
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    setIsSubmitting(true);
+    setSubmitStatus({
+      type: "",
+      message: "",
+    });
+
+    try {
+      // Send the lead summary to you.
+      await sendBuildAdminEmail(formData);
+
+      // Send a confirmation email to the user.
+      await sendBuildConfirmationEmail(formData);
+
+      // Show success feedback in the UI.
+      setSubmitStatus({
+        type: "success",
+        message:
+          "Your build was submitted successfully. Check your email for confirmation.",
+      });
+
+      // Reset the form after a successful submit.
+      setFormData({
+        service: "",
+        goal: "",
+        experience: "",
+        trainingDays: "",
+        equipment: "",
+        nutritionGoal: "",
+        biggestStruggle: "",
+        successVision: "",
+        name: "",
+        email: "",
+      });
+    } catch (error) {
+      console.error("Failed to submit Build With Me form:", error);
+
+      setSubmitStatus({
+        type: "error",
+        message:
+          "Something went wrong while sending your form. Double-check your EmailJS settings and try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
+  return (
+    <main className="min-h-screen bg-zinc-950 text-white">
+      <section className="border-b border-zinc-800 bg-gradient-to-b from-zinc-950 to-zinc-900">
+        <div className="mx-auto max-w-4xl px-6 py-16 sm:px-8 lg:px-12">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-fuchsia-300">
+            Build With Me
+          </p>
+
+          <h1 className="mt-4 text-4xl font-black leading-tight sm:text-5xl">
+            Let’s Build Your Next Phase
+          </h1>
+
+          <p className="mt-6 max-w-3xl text-lg leading-8 text-zinc-300">
+            This form helps me understand where you are, what you want to build,
+            and how I can create a plan that supports you mentally, physically,
+            and spiritually.
+          </p>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-4xl px-6 py-12 sm:px-8 lg:px-12">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-8 rounded-3xl border border-zinc-800 bg-zinc-900 p-6 shadow-2xl shadow-black/20 sm:p-8"
+        >
+          <div>
+            <h2 className="text-2xl font-bold text-white">
+              1. What do you want help with?
+            </h2>
+            <p className="mt-2 text-zinc-400">
+              Choose the type of support you want most right now.
+            </p>
+
+            <div className="mt-4 grid gap-3 sm:grid-cols-3">
+              {["Training Plan", "Meal Plan", "Both"].map((option) => (
+                <label
+                  key={option}
+                  className={`cursor-pointer rounded-2xl border p-4 transition ${
+                    formData.service === option
+                      ? "border-fuchsia-400 bg-fuchsia-500/10"
+                      : "border-zinc-700 bg-zinc-950 hover:border-fuchsia-500"
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="service"
+                    value={option}
+                    checked={formData.service === option}
+                    onChange={handleChange}
+                    className="sr-only"
+                    required
+                  />
+                  <span className="font-semibold text-white">{option}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="goal" className="block text-lg font-bold text-white">
+              2. What are you trying to build?
+            </label>
+            <select
+              id="goal"
+              name="goal"
+              value={formData.goal}
+              onChange={handleChange}
+              className="mt-3 w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white outline-none transition focus:border-fuchsia-400"
+              required
+            >
+              <option value="">Select your primary goal</option>
+              <option value="Strength">Strength</option>
+              <option value="Muscle Gain">Muscle Gain</option>
+              <option value="Weight Loss">Weight Loss</option>
+              <option value="Endurance">Endurance</option>
+              <option value="Athletic Performance">Athletic Performance</option>
+              <option value="Structure and Discipline">
+                Structure and Discipline
+              </option>
+              <option value="Overall Reset">Overall Reset</option>
+            </select>
+          </div>
+
+          <div>
+            <label
+              htmlFor="experience"
+              className="block text-lg font-bold text-white"
+            >
+              3. What is your current experience level?
+            </label>
+            <select
+              id="experience"
+              name="experience"
+              value={formData.experience}
+              onChange={handleChange}
+              className="mt-3 w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white outline-none transition focus:border-fuchsia-400"
+              required
+            >
+              <option value="">Select your experience</option>
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Advanced">Advanced</option>
+            </select>
+          </div>
+
+          <div>
+            <label
+              htmlFor="trainingDays"
+              className="block text-lg font-bold text-white"
+            >
+              4. How many days per week can you realistically commit?
+            </label>
+            <select
+              id="trainingDays"
+              name="trainingDays"
+              value={formData.trainingDays}
+              onChange={handleChange}
+              className="mt-3 w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white outline-none transition focus:border-fuchsia-400"
+              required
+            >
+              <option value="">Select training days</option>
+              <option value="2 days">2 days</option>
+              <option value="3 days">3 days</option>
+              <option value="4 days">4 days</option>
+              <option value="5 days">5 days</option>
+              <option value="6 days">6 days</option>
+            </select>
+          </div>
+
+          <div>
+            <label
+              htmlFor="equipment"
+              className="block text-lg font-bold text-white"
+            >
+              5. What equipment or training environment do you have access to?
+            </label>
+            <textarea
+              id="equipment"
+              name="equipment"
+              value={formData.equipment}
+              onChange={handleChange}
+              rows="4"
+              placeholder="Example: full gym, dumbbells only, climbing gym, treadmill, bodyweight, trails, etc."
+              className="mt-3 w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-fuchsia-400"
+              required
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="nutritionGoal"
+              className="block text-lg font-bold text-white"
+            >
+              6. What is your nutrition goal right now?
+            </label>
+            <input
+              id="nutritionGoal"
+              name="nutritionGoal"
+              type="text"
+              value={formData.nutritionGoal}
+              onChange={handleChange}
+              placeholder="Example: lose weight, gain muscle, eat cleaner, meal prep consistency"
+              className="mt-3 w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-fuchsia-400"
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="biggestStruggle"
+              className="block text-lg font-bold text-white"
+            >
+              7. What are you struggling with most right now?
+            </label>
+            <textarea
+              id="biggestStruggle"
+              name="biggestStruggle"
+              value={formData.biggestStruggle}
+              onChange={handleChange}
+              rows="5"
+              placeholder="Be honest. This helps me build something that actually fits your life."
+              className="mt-3 w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-fuchsia-400"
+              required
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="successVision"
+              className="block text-lg font-bold text-white"
+            >
+              8. What would success look like for you in the next 3 to 6 months?
+            </label>
+            <textarea
+              id="successVision"
+              name="successVision"
+              value={formData.successVision}
+              onChange={handleChange}
+              rows="5"
+              placeholder="Describe what you want to feel like, look like, or be capable of."
+              className="mt-3 w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-fuchsia-400"
+              required
+            />
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2">
+            <div>
+              <label htmlFor="name" className="block text-lg font-bold text-white">
+                9. Your name
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Your name"
+                className="mt-3 w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-fuchsia-400"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="email" className="block text-lg font-bold text-white">
+                10. Your email
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="you@example.com"
+                className="mt-3 w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-fuchsia-400"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-fuchsia-500/30 bg-fuchsia-500/10 p-5">
+            <p className="text-sm leading-7 text-zinc-200">
+              After you submit, I’ll review your answers and use them to build a
+              plan that matches your real goals, real schedule, and real life.
+            </p>
+          </div>
+
+          {submitStatus.message && (
+            <div
+              className={`rounded-2xl border p-4 text-sm leading-7 ${
+                submitStatus.type === "success"
+                  ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-200"
+                  : "border-red-500/30 bg-red-500/10 text-red-200"
+              }`}
+            >
+              {submitStatus.message}
+            </div>
+          )}
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full rounded-2xl bg-fuchsia-500 px-6 py-4 text-base font-bold text-white shadow-lg shadow-fuchsia-500/20 transition hover:scale-[1.01] hover:bg-fuchsia-400 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {isSubmitting ? "Submitting..." : "Submit My Build"}
+          </button>
+        </form>
+      </section>
+    </main>
+  );
+}

@@ -1,74 +1,130 @@
-// /src/pages/Home.jsx
-import { useEffect, useState } from "react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+// src/pages/Home.jsx
 
 export default function Home() {
-  const [user, setUser] = useState(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-    return () => unsubscribe();
-  }, []);
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 to-indigo-800 flex items-center justify-center font-sans px-4">
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden w-full max-w-4xl flex flex-col md:flex-row">
-        {/* Left Image */}
-        <div className="md:w-1/2 bg-purple-700 flex items-center justify-center p-8">
-          <img
-            src="/assets/purplebuildsHOME.jpg"
-            alt="PurpleBuilds Mascot"
-            className="w-full max-w-[280px] h-auto"
-          />
+    <main className="min-h-screen bg-zinc-950 text-white">
+      <section className="mx-auto flex max-w-6xl flex-col items-center justify-center px-6 py-24 text-center sm:px-8 lg:px-12">
+        <p className="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-fuchsia-300">
+          PurpleBuilds
+        </p>
+
+        <h1 className="max-w-4xl text-4xl font-black leading-tight text-white sm:text-5xl lg:text-6xl">
+          Building Together
+          <span className="block text-fuchsia-400">
+            Mentally, Physically, and Spiritually
+          </span>
+        </h1>
+
+        <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-300 sm:text-xl">
+          PurpleBuilds helps people create structure, strength, discipline, and
+          momentum through custom training plans, meal guidance, and purpose-driven
+          coaching.
+        </p>
+
+        <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+          <a
+            href="/build-with-me"
+            className="rounded-2xl bg-fuchsia-500 px-6 py-3 text-base font-bold text-white shadow-lg shadow-fuchsia-500/20 transition hover:scale-[1.02] hover:bg-fuchsia-400"
+          >
+            Build With Me
+          </a>
+
+          <a
+            href="/about"
+            className="rounded-2xl border border-zinc-700 bg-zinc-900 px-6 py-3 text-base font-semibold text-zinc-200 transition hover:border-fuchsia-400 hover:text-white"
+          >
+            About Ryan
+          </a>
+        </div>
+      </section>
+
+      <section className="border-t border-zinc-800 bg-zinc-900/60">
+        <div className="mx-auto grid max-w-6xl gap-6 px-6 py-16 sm:px-8 lg:grid-cols-3 lg:px-12">
+          <div className="rounded-3xl border border-zinc-800 bg-zinc-900 p-6 shadow-xl shadow-black/20">
+            <h2 className="text-xl font-bold text-fuchsia-300">Mental</h2>
+            <p className="mt-3 leading-7 text-zinc-300">
+              Build focus, discipline, consistency, and a stronger mindset for
+              everyday life.
+            </p>
+          </div>
+
+          <div className="rounded-3xl border border-zinc-800 bg-zinc-900 p-6 shadow-xl shadow-black/20">
+            <h2 className="text-xl font-bold text-fuchsia-300">Physical</h2>
+            <p className="mt-3 leading-7 text-zinc-300">
+              Get custom training built around your goals, your schedule, and the
+              equipment you actually have.
+            </p>
+          </div>
+
+          <div className="rounded-3xl border border-zinc-800 bg-zinc-900 p-6 shadow-xl shadow-black/20">
+            <h2 className="text-xl font-bold text-fuchsia-300">Spiritual</h2>
+            <p className="mt-3 leading-7 text-zinc-300">
+              Move with more purpose, direction, and intention as you build the
+              life you actually want.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 py-16 sm:px-8 lg:px-12">
+        <div className="max-w-2xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-fuchsia-300">
+            What We Build
+          </p>
+          <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">
+            Simple coaching built around real goals
+          </h2>
+          <p className="mt-4 leading-7 text-zinc-300">
+            No overcomplicated systems. No generic advice. Just practical guidance
+            to help you move forward with clarity.
+          </p>
         </div>
 
-        {/* Right Content */}
-        <div className="md:w-1/2 p-8 flex flex-col justify-center text-center">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">
-            👋 Welcome to PurpleBuilds.com
+        <div className="mt-10 grid gap-6 md:grid-cols-3">
+          <div className="rounded-3xl border border-zinc-800 bg-zinc-900 p-6">
+            <h3 className="text-xl font-bold text-white">Training Plans</h3>
+            <p className="mt-3 leading-7 text-zinc-300">
+              Strength, endurance, performance, structure, and progression built for
+              your level and lifestyle.
+            </p>
+          </div>
+
+          <div className="rounded-3xl border border-zinc-800 bg-zinc-900 p-6">
+            <h3 className="text-xl font-bold text-white">Meal Guidance</h3>
+            <p className="mt-3 leading-7 text-zinc-300">
+              Nutrition support for weight loss, muscle gain, performance, or simply
+              making eating easier and more consistent.
+            </p>
+          </div>
+
+          <div className="rounded-3xl border border-zinc-800 bg-zinc-900 p-6">
+            <h3 className="text-xl font-bold text-white">Coaching Support</h3>
+            <p className="mt-3 leading-7 text-zinc-300">
+              Build stronger habits, stronger routines, and stronger follow-through
+              in every part of life.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-zinc-800 bg-gradient-to-b from-zinc-950 to-zinc-900">
+        <div className="mx-auto max-w-4xl px-6 py-20 text-center sm:px-8 lg:px-12">
+          <h2 className="text-3xl font-bold text-white sm:text-4xl">
+            Ready to start building?
           </h2>
-          <p className="text-gray-600 text-sm mb-6">
-            Submit your project, track progress, and collaborate easily.
+          <p className="mt-4 text-lg leading-8 text-zinc-300">
+            Tell me where you are, where you want to go, and we’ll build the next
+            phase together.
           </p>
 
-          {user ? (
-            <div className="space-y-4">
-              <button
-                onClick={() => navigate("/dashboard")}
-                className="bg-purple-700 hover:bg-purple-800 text-white py-2 px-4 rounded w-full"
-              >
-                📂 My Submissions
-              </button>
-              <button
-                onClick={() => navigate("/intake/step-1")}
-                className="bg-white text-purple-700 border border-purple-700 py-2 px-4 rounded w-full hover:bg-purple-50"
-              >
-                ➕ New Project
-              </button>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              <button
-                onClick={() => navigate("/login")}
-                className="bg-purple-700 hover:bg-purple-800 text-white py-2 px-4 rounded w-full"
-              >
-                🔐 Login
-              </button>
-              <button
-                onClick={() => navigate("/signup")}
-                className="bg-white text-purple-700 border border-purple-700 py-2 px-4 rounded w-full hover:bg-purple-50"
-              >
-                ✍️ Sign Up
-              </button>
-            </div>
-          )}
+          <a
+            href="/build-with-me"
+            className="mt-8 inline-block rounded-2xl bg-fuchsia-500 px-8 py-4 text-base font-bold text-white shadow-lg shadow-fuchsia-500/20 transition hover:scale-[1.02] hover:bg-fuchsia-400"
+          >
+            Start Your Build
+          </a>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

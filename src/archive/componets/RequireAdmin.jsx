@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../firebase/auth";
+import { auth } from "../../firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../services/firestore";
+import { db } from "../../services/firestore";
 
 export default function RequireAdmin({ children }) {
   const navigate = useNavigate();

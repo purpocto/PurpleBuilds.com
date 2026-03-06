@@ -1,67 +1,30 @@
-// /src/components/Navbar.jsx
+// src/components/Navbar.jsx
+
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { auth } from "../firebase/auth";
-import { signOut, onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../firebase/firebase";
 
 export default function Navbar() {
-  const [user, setUser] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setUser(user);
-      if (user) {
-        const roleRef = doc(db, "roles", user.uid);
-        const roleSnap = await getDoc(roleRef);
-        setIsAdmin(roleSnap.exists() && roleSnap.data().admin === true);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  const handleLogout = () => {
-    signOut(auth);
-  };
-
   return (
-    <nav className="bg-white shadow-md text-purple-800 font-sans border-b border-purple-300 p-4 flex justify-between items-center">
-      <Link to="/" className="text-xl font-bold">
-        🖥️ PurpleBuilds
-      </Link>
-      <div className="flex gap-4 items-center">
-        <Link to="/" className="hover:text-purple-600">Home</Link>
+    <header className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-950/95 backdrop-blur">
+      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 sm:px-8 lg:px-12">
+        <Link to="/" className="text-xl font-black tracking-tight text-white">
+          <span className="text-fuchsia-400">Purple</span>Builds
+        </Link>
 
-        {user ? (
-          <>
-            {isAdmin ? (
-              <>
-                <Link to="/admin" className="hover:text-purple-600">Admin Panel</Link>
-                <Link to="/dashboard" className="hover:text-purple-600">Admin Dashboard</Link>
-              </>
-            ) : (
-              <>
-                <Link to="/intake" className="hover:text-purple-600">New Project</Link>
-                <Link to="/dashboard" className="hover:text-purple-600">My Submissions</Link>
-              </>
-            )}
-            <button
-              onClick={handleLogout}
-              className="border border-purple-700 px-3 py-1 rounded hover:bg-purple-700 hover:text-white transition"
-            >
-              Log Out
-            </button>
-          </>
-        ) : (
-          <>
-            <Link to="/login" className="hover:text-purple-600">Login</Link>
-            <Link to="/signup" className="hover:text-purple-600">Sign Up</Link>
-          </>
-        )}
-      </div>
-    </nav>
+        <div className="flex items-center gap-6 text-sm font-semibold text-zinc-300">
+          <Link to="/" className="transition hover:text-fuchsia-400">
+            Home
+          </Link>
+          <Link to="/build-with-me" className="transition hover:text-fuchsia-400">
+            Build With Me
+          </Link>
+          <Link to="/about" className="transition hover:text-fuchsia-400">
+            About
+          </Link>
+          <Link to="/contact" className="transition hover:text-fuchsia-400">
+            Contact
+          </Link>
+        </div>
+      </nav>
+    </header>
   );
 }
