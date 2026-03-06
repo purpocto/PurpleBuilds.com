@@ -1,13 +1,11 @@
-# Firebase
+# Firebase local/cache
 .firebase/
-firebase.json
-.firebaserc
 .firestore.js
 
-# Environment Variables
+# Environment variables
 .env
 
-# Build Output
+# Build output
 dist/
 functions/dist/
 
@@ -15,7 +13,7 @@ functions/dist/
 node_modules/
 functions/node_modules/
 
-# Logs & Caches
+# Logs & caches
 *.log
 *.cache
 .eslintcache
@@ -23,7 +21,3 @@ functions/node_modules/
 # VSCode / IDE
 .vscode/
 .idea/
-
-# Optional: lockfiles (if you want fresh installs every time)
-package-lock.json
-functions/package-lock.json
