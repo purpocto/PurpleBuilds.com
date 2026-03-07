@@ -7,6 +7,8 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import BuildWithMe from "./pages/BuildWithMe";
 import Contact from "./pages/Contact";
+import Pricing from "./pages/Pricing";
+import FAQ from "./pages/FAQ";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
             <Route path="/build-with-me" element={<BuildWithMe />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/faq" element={<FAQ />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </main>

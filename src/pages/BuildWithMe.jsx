@@ -5,6 +5,7 @@ import {
 } from "../services/email";
 
 const initialFormData = {
+  selectedPlan: "",
   service: "",
   goal: "",
   experience: "",
@@ -86,8 +87,8 @@ export default function BuildWithMe() {
             </h1>
 
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-zinc-300">
-              Your request has been sent successfully. I’ll personally review your
-              answers and follow up using the email you submitted.
+              Your request has been sent successfully. I’ll personally review
+              your answers and follow up using the email you submitted.
             </p>
 
             <div className="mt-8 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm leading-7 text-emerald-200">
@@ -143,7 +144,61 @@ export default function BuildWithMe() {
         >
           <div>
             <h2 className="text-2xl font-bold text-white">
-              1. What do you want help with?
+              1. Which plan feels like the best fit?
+            </h2>
+            <p className="mt-2 text-zinc-400">
+              Choose the option that best matches the level of support you want.
+            </p>
+
+            <div className="mt-4 grid gap-4 sm:grid-cols-3">
+              {[
+                {
+                  name: "Starter",
+                  price: "$49",
+                  desc: "Personalized training plan",
+                },
+                {
+                  name: "Build Plan",
+                  price: "$99",
+                  desc: "Training + nutrition guidance",
+                },
+                {
+                  name: "Full Build",
+                  price: "$199",
+                  desc: "Training + nutrition + progression structure",
+                },
+              ].map((plan) => (
+                <label
+                  key={plan.name}
+                  className={`cursor-pointer rounded-2xl border p-4 transition ${
+                    formData.selectedPlan === plan.name
+                      ? "border-fuchsia-400 bg-fuchsia-500/10"
+                      : "border-zinc-700 bg-zinc-950 hover:border-fuchsia-500"
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="selectedPlan"
+                    value={plan.name}
+                    checked={formData.selectedPlan === plan.name}
+                    onChange={handleChange}
+                    className="sr-only"
+                    required
+                  />
+
+                  <p className="text-lg font-bold text-white">{plan.name}</p>
+                  <p className="mt-1 text-fuchsia-300">{plan.price}</p>
+                  <p className="mt-2 text-sm leading-6 text-zinc-400">
+                    {plan.desc}
+                  </p>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-2xl font-bold text-white">
+              2. What do you want help with?
             </h2>
             <p className="mt-2 text-zinc-400">
               Choose the type of support you want most right now.
@@ -176,7 +231,7 @@ export default function BuildWithMe() {
 
           <div>
             <label htmlFor="goal" className="block text-lg font-bold text-white">
-              2. What are you trying to build?
+              3. What are you trying to build?
             </label>
             <select
               id="goal"
@@ -204,7 +259,7 @@ export default function BuildWithMe() {
               htmlFor="experience"
               className="block text-lg font-bold text-white"
             >
-              3. What is your current experience level?
+              4. What is your current experience level?
             </label>
             <select
               id="experience"
@@ -226,7 +281,7 @@ export default function BuildWithMe() {
               htmlFor="trainingDays"
               className="block text-lg font-bold text-white"
             >
-              4. How many days per week can you realistically commit?
+              5. How many days per week can you realistically commit?
             </label>
             <select
               id="trainingDays"
@@ -250,7 +305,7 @@ export default function BuildWithMe() {
               htmlFor="equipment"
               className="block text-lg font-bold text-white"
             >
-              5. What equipment or training environment do you have access to?
+              6. What equipment or training environment do you have access to?
             </label>
             <textarea
               id="equipment"
@@ -269,7 +324,7 @@ export default function BuildWithMe() {
               htmlFor="nutritionGoal"
               className="block text-lg font-bold text-white"
             >
-              6. What is your nutrition goal right now?
+              7. What is your nutrition goal right now?
             </label>
             <input
               id="nutritionGoal"
@@ -287,7 +342,7 @@ export default function BuildWithMe() {
               htmlFor="biggestStruggle"
               className="block text-lg font-bold text-white"
             >
-              7. What are you struggling with most right now?
+              8. What are you struggling with most right now?
             </label>
             <textarea
               id="biggestStruggle"
@@ -306,7 +361,7 @@ export default function BuildWithMe() {
               htmlFor="successVision"
               className="block text-lg font-bold text-white"
             >
-              8. What would success look like for you in the next 3 to 6 months?
+              9. What would success look like for you in the next 3 to 6 months?
             </label>
             <textarea
               id="successVision"
@@ -323,7 +378,7 @@ export default function BuildWithMe() {
           <div className="grid gap-6 sm:grid-cols-2">
             <div>
               <label htmlFor="name" className="block text-lg font-bold text-white">
-                9. Your name
+                10. Your name
               </label>
               <input
                 id="name"
@@ -339,7 +394,7 @@ export default function BuildWithMe() {
 
             <div>
               <label htmlFor="email" className="block text-lg font-bold text-white">
-                10. Your email
+                11. Your email
               </label>
               <input
                 id="email"
