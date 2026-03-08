@@ -126,13 +126,13 @@ export default function BuildWithMe() {
           </p>
 
           <h1 className="mt-4 text-4xl font-black leading-tight sm:text-5xl">
-            Let’s Build Your Next Phase
+            Let’s Build the Right Next Step
           </h1>
 
           <p className="mt-6 max-w-3xl text-lg leading-8 text-zinc-300">
-            This form helps me understand where you are, what you want to build,
-            and how I can create a plan that supports you mentally, physically,
-            and spiritually.
+            This form helps me understand the athlete, their goals, their
+            current level, and what kind of support will best help them build
+            speed, confidence, explosiveness, and discipline.
           </p>
         </div>
       </section>
@@ -144,28 +144,29 @@ export default function BuildWithMe() {
         >
           <div>
             <h2 className="text-2xl font-bold text-white">
-              1. Which plan feels like the best fit?
+              1. Which build feels like the best fit?
             </h2>
             <p className="mt-2 text-zinc-400">
-              Choose the option that best matches the level of support you want.
+              Choose the option that best matches the level of support you want
+              right now.
             </p>
 
             <div className="mt-4 grid gap-4 sm:grid-cols-3">
               {[
                 {
-                  name: "Starter",
+                  name: "Speed Build",
                   price: "$49",
-                  desc: "Personalized training plan",
+                  desc: "A speed-focused training plan for structure, movement, and performance.",
                 },
                 {
-                  name: "Build Plan",
+                  name: "Athlete Build",
                   price: "$99",
-                  desc: "Training + nutrition guidance",
+                  desc: "Training plus added support for performance, recovery, and consistency.",
                 },
                 {
-                  name: "Full Build",
+                  name: "Full Performance Build",
                   price: "$199",
-                  desc: "Training + nutrition + progression structure",
+                  desc: "A more complete development plan for performance, discipline, and long-term growth.",
                 },
               ].map((plan) => (
                 <label
@@ -198,14 +199,14 @@ export default function BuildWithMe() {
 
           <div>
             <h2 className="text-2xl font-bold text-white">
-              2. What do you want help with?
+              2. What kind of support are you looking for?
             </h2>
             <p className="mt-2 text-zinc-400">
-              Choose the type of support you want most right now.
+              Choose the type of support that matters most right now.
             </p>
 
             <div className="mt-4 grid gap-3 sm:grid-cols-3">
-              {["Training Plan", "Meal Plan", "Both"].map((option) => (
+              {["Speed Training", "Performance Guidance", "Both"].map((option) => (
                 <label
                   key={option}
                   className={`cursor-pointer rounded-2xl border p-4 transition ${
@@ -231,7 +232,7 @@ export default function BuildWithMe() {
 
           <div>
             <label htmlFor="goal" className="block text-lg font-bold text-white">
-              3. What are you trying to build?
+              3. What is the athlete trying to build most right now?
             </label>
             <select
               id="goal"
@@ -241,16 +242,14 @@ export default function BuildWithMe() {
               className="mt-3 w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white outline-none transition focus:border-fuchsia-400"
               required
             >
-              <option value="">Select your primary goal</option>
-              <option value="Strength">Strength</option>
-              <option value="Muscle Gain">Muscle Gain</option>
-              <option value="Weight Loss">Weight Loss</option>
-              <option value="Endurance">Endurance</option>
+              <option value="">Select the primary goal</option>
+              <option value="Speed">Speed</option>
+              <option value="Agility">Agility</option>
+              <option value="Explosiveness">Explosiveness</option>
+              <option value="Acceleration">Acceleration</option>
               <option value="Athletic Performance">Athletic Performance</option>
-              <option value="Structure and Discipline">
-                Structure and Discipline
-              </option>
-              <option value="Overall Reset">Overall Reset</option>
+              <option value="Confidence and Discipline">Confidence and Discipline</option>
+              <option value="Overall Athlete Development">Overall Athlete Development</option>
             </select>
           </div>
 
@@ -259,7 +258,7 @@ export default function BuildWithMe() {
               htmlFor="experience"
               className="block text-lg font-bold text-white"
             >
-              4. What is your current experience level?
+              4. What is the athlete’s current experience level?
             </label>
             <select
               id="experience"
@@ -269,8 +268,9 @@ export default function BuildWithMe() {
               className="mt-3 w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white outline-none transition focus:border-fuchsia-400"
               required
             >
-              <option value="">Select your experience</option>
+              <option value="">Select experience level</option>
               <option value="Beginner">Beginner</option>
+              <option value="Developing">Developing</option>
               <option value="Intermediate">Intermediate</option>
               <option value="Advanced">Advanced</option>
             </select>
@@ -281,7 +281,7 @@ export default function BuildWithMe() {
               htmlFor="trainingDays"
               className="block text-lg font-bold text-white"
             >
-              5. How many days per week can you realistically commit?
+              5. How many days per week can the athlete realistically train?
             </label>
             <select
               id="trainingDays"
@@ -292,11 +292,11 @@ export default function BuildWithMe() {
               required
             >
               <option value="">Select training days</option>
-              <option value="2 days">2 days</option>
-              <option value="3 days">3 days</option>
-              <option value="4 days">4 days</option>
-              <option value="5 days">5 days</option>
-              <option value="6 days">6 days</option>
+              <option value="1-2 days">1–2 days</option>
+              <option value="2-3 days">2–3 days</option>
+              <option value="3-4 days">3–4 days</option>
+              <option value="4-5 days">4–5 days</option>
+              <option value="5+ days">5+ days</option>
             </select>
           </div>
 
@@ -305,7 +305,7 @@ export default function BuildWithMe() {
               htmlFor="equipment"
               className="block text-lg font-bold text-white"
             >
-              6. What equipment or training environment do you have access to?
+              6. What equipment or training environment is available?
             </label>
             <textarea
               id="equipment"
@@ -313,7 +313,7 @@ export default function BuildWithMe() {
               value={formData.equipment}
               onChange={handleChange}
               rows="4"
-              placeholder="Example: full gym, dumbbells only, climbing gym, treadmill, bodyweight, trails, etc."
+              placeholder="Example: field, track, turf, gym, dumbbells, bodyweight only, school weight room, etc."
               className="mt-3 w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-fuchsia-400"
               required
             />
@@ -324,7 +324,7 @@ export default function BuildWithMe() {
               htmlFor="nutritionGoal"
               className="block text-lg font-bold text-white"
             >
-              7. What is your nutrition goal right now?
+              7. Are there any nutrition or recovery goals to support performance?
             </label>
             <input
               id="nutritionGoal"
@@ -332,7 +332,7 @@ export default function BuildWithMe() {
               type="text"
               value={formData.nutritionGoal}
               onChange={handleChange}
-              placeholder="Example: lose weight, gain muscle, eat cleaner, meal prep consistency"
+              placeholder="Example: better recovery, more energy, healthier eating, weight management"
               className="mt-3 w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-fuchsia-400"
             />
           </div>
@@ -342,7 +342,7 @@ export default function BuildWithMe() {
               htmlFor="biggestStruggle"
               className="block text-lg font-bold text-white"
             >
-              8. What are you struggling with most right now?
+              8. What is the athlete struggling with most right now?
             </label>
             <textarea
               id="biggestStruggle"
@@ -350,7 +350,7 @@ export default function BuildWithMe() {
               value={formData.biggestStruggle}
               onChange={handleChange}
               rows="5"
-              placeholder="Be honest. This helps me build something that actually fits your life."
+              placeholder="Example: confidence, consistency, speed, explosiveness, work ethic, structure, staying motivated"
               className="mt-3 w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-fuchsia-400"
               required
             />
@@ -361,7 +361,7 @@ export default function BuildWithMe() {
               htmlFor="successVision"
               className="block text-lg font-bold text-white"
             >
-              9. What would success look like for you in the next 3 to 6 months?
+              9. What would success look like over the next 3 to 6 months?
             </label>
             <textarea
               id="successVision"
@@ -369,7 +369,7 @@ export default function BuildWithMe() {
               value={formData.successVision}
               onChange={handleChange}
               rows="5"
-              placeholder="Describe what you want to feel like, look like, or be capable of."
+              placeholder="Describe what better performance, confidence, or progress would look like."
               className="mt-3 w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-fuchsia-400"
               required
             />
@@ -378,7 +378,7 @@ export default function BuildWithMe() {
           <div className="grid gap-6 sm:grid-cols-2">
             <div>
               <label htmlFor="name" className="block text-lg font-bold text-white">
-                10. Your name
+                10. Parent or athlete name
               </label>
               <input
                 id="name"
@@ -394,7 +394,7 @@ export default function BuildWithMe() {
 
             <div>
               <label htmlFor="email" className="block text-lg font-bold text-white">
-                11. Your email
+                11. Best email
               </label>
               <input
                 id="email"
@@ -411,8 +411,9 @@ export default function BuildWithMe() {
 
           <div className="rounded-2xl border border-fuchsia-500/30 bg-fuchsia-500/10 p-5">
             <p className="text-sm leading-7 text-zinc-200">
-              After you submit, I’ll review your answers and use them to build a
-              plan that matches your real goals, real schedule, and real life.
+              After you submit, I’ll review your answers and use them to build
+              the right next step for the athlete’s performance, growth, and
+              long-term development.
             </p>
           </div>
 
